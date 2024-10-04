@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import { faEdit, faTrash, faPlus, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faPlus, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import ReactPaginate from 'react-paginate';
-import { API_ROUTES, ROLE_CLAIM, ADMIN_ROLE } from '../../config/config';
+import { API_ROUTES } from '../../config/config';
 import '../../styles/styles.css';
 import {
   DashboardContainer,
@@ -14,7 +14,6 @@ import {
   TableCell,
   Button,
   AddButton,
-  DeleteButton,
   SearchBarContainer,
   SearchBar,
   SearchIcon,
@@ -27,7 +26,7 @@ import {
 import CrearProductoForm from './CrearProductoForm';
 import ActualizarProductoForm from './ActualizarProductoForm';
 
-const Dashboard = () => {
+const UserDashboard = () => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -36,7 +35,6 @@ const Dashboard = () => {
   const [searchField, setSearchField] = useState('nombre');
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 5;
-  const role = JSON.parse(atob(localStorage.getItem('token').split('.')[1]))[ROLE_CLAIM];
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -73,20 +71,6 @@ const Dashboard = () => {
     setShowUpdateModal(true);
   };
 
-  const handleDelete = async (productoID) => {
-    const token = localStorage.getItem('token');
-    try {
-      await axios.delete(API_ROUTES.PRODUCT(productoID), {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      fetchProducts();
-    } catch (error) {
-      console.error('Error al eliminar el producto:', error);
-    }
-  };
-
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
@@ -102,7 +86,7 @@ const Dashboard = () => {
 
   return (
     <DashboardContainer>
-      <h1>Dashboard para {role}</h1>
+      <h1>Dashboard para Usuario</h1>
       <div>
       <button className="logout-button" onClick={handleLogout}>
         <FontAwesomeIcon icon={faSignOutAlt} className="logout-icon" /> Cerrar Sesión
@@ -161,11 +145,6 @@ const Dashboard = () => {
         <Button onClick={() => handleEdit(product)}>
           <FontAwesomeIcon icon={faEdit} /> Editar
         </Button>
-        {role === ADMIN_ROLE && (
-          <DeleteButton onClick={() => handleDelete(product.productoID)}>
-            <FontAwesomeIcon icon={faTrash} /> Eliminar
-          </DeleteButton>
-        )}
       </TableCell>
     </tr>
   ))}
@@ -200,4 +179,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default UserDashboard;

@@ -69,14 +69,15 @@ const LoginView = () => {
 
       // Decodifica el token para obtener el rol del usuario
       const payload = JSON.parse(atob(token.split('.')[1]));
-      console.log('Payload del token:', payload);
       const role = payload[ROLE_CLAIM];
 
       // Valida el rol del usuario
-      if (role === ADMIN_ROLE || role === USER_ROLE) {
+      if (role === ADMIN_ROLE) {
         localStorage.setItem('role', role);
-        // Redirige al usuario al dashboard
-        navigate('/dashboard');
+        navigate('/Admin');
+      } else if (role === USER_ROLE) {
+        localStorage.setItem('role', role);
+        navigate('/User');
       } else {
         alert('Rol no autorizado');
       }
