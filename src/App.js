@@ -4,6 +4,7 @@ import AuthProvider, { AuthContext } from './AuthContext';
 import ProductProvider from './ProductContext';
 import Principal from './PublicoView';
 import Login from './LoginView';
+import Dashboard from './Dashboard';
 import AdminDashboard from './AdminDashboard';
 import UserDashboard from './UserDashboard';
 import ProtectedRoute from './ProtectedRoute';
@@ -16,6 +17,7 @@ const App = () => {
           <Routes>
             <Route path="/Principal" element={<Principal />} />
             <Route path="/Login" element={<Login />} />
+            <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
             <Route path="/admin" element={<ProtectedRoute element={<AdminDashboard />} />} />
             <Route path="/user" element={<ProtectedRoute element={<UserDashboard />} />} />
             <Route path="/" element={<AuthRedirect />} />
