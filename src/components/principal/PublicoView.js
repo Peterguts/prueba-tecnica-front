@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { API_ROUTES } from './config/config';
+import { API_ROUTES } from '../../config/config';
 import styled from 'styled-components';
 import axios from 'axios';
-import Footer from './Footer'; 
+import Footer from '../footer/Footer'; 
 
 const Container = styled.div`
   display: flex;

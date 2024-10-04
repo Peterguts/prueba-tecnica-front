@@ -1,16 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import AuthProvider, { AuthContext } from './AuthContext';
-import ProductProvider from './ProductContext';
-import Principal from './PublicoView';
-import Login from './LoginView';
+import Principal from './components/principal/PublicoView';
+import Login from './components/login/Login';
 import Dashboard from './components/dashboard/Dashboard';
 import ProtectedRoute from './ProtectedRoute';
 
 const App = () => {
   return (
     <AuthProvider>
-      <ProductProvider>
         <Router>
           <Routes>
             <Route path="/Principal" element={<Principal />} />
@@ -19,7 +17,6 @@ const App = () => {
             <Route path="/" element={<AuthRedirect />} />
           </Routes>
         </Router>
-      </ProductProvider>
     </AuthProvider>
   );
 };

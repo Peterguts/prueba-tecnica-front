@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { ProductContext } from './ProductContext';
-import { AuthContext } from './AuthContext';
+import { AuthContext } from '../../AuthContext';
 
 const ProductForm = ({ product }) => {
   const { addProduct, updateProduct } = useContext(ProductContext);

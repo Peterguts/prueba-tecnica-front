@@ -9,7 +9,6 @@ const AuthProvider = ({ children }) => {
   const login = (role) => {
     setUser(true);
     setRole(role);
-    console.log(`Logged in as ${role}`);
   };
 
   const logout = () => {

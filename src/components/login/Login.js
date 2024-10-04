@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { API_ROUTES, TOKEN_STORAGE_KEY, ROLE_CLAIM, ADMIN_ROLE, USER_ROLE } from './config/config';
+import { API_ROUTES, TOKEN_STORAGE_KEY, ROLE_CLAIM, ADMIN_ROLE, USER_ROLE } from '../../config/config';
 
 const LoginContainer = styled.div`
   display: flex;
@@ -91,6 +91,9 @@ const LoginView = () => {
     }
   };
 
+  const handleRedirect = () => {
+    navigate('/Principal');
+  };
   return (
     <LoginContainer>
       <Logo src="/img/logoCortoMobile.png" alt="Logo" />
@@ -111,6 +114,7 @@ const LoginView = () => {
         />
         <Button type="submit">Iniciar Sesión</Button>
       </LoginForm>
+      <Button type="button" onClick={handleRedirect}>Ir a Principal</Button>
     </LoginContainer>
   );
 };
