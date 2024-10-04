@@ -8,6 +8,8 @@ export const DASHBOARD_ROUTE = '/dashboard';
 // Rutas de la API
 export const API_ROUTES = {
   LOGIN: `${API_URL}/login`,
-  PRODUCTS: `${API_URL}/api/Productos`,
+  PRODUCTS: `${API_URL}/api/Productos/todos`,
+  PRODUCTS_DIS: `${API_URL}/api/Productos/disponibles`,
+  PRODUCT_CREAR: `${API_URL}/api/Productos/`,
   PRODUCT: (id) => `${API_URL}/api/Productos/${id}`,
 };

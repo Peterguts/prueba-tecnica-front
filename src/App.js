@@ -4,9 +4,7 @@ import AuthProvider, { AuthContext } from './AuthContext';
 import ProductProvider from './ProductContext';
 import Principal from './PublicoView';
 import Login from './LoginView';
-import Dashboard from './Dashboard';
-import AdminDashboard from './AdminDashboard';
-import UserDashboard from './UserDashboard';
+import Dashboard from './components/dashboard/Dashboard';
 import ProtectedRoute from './ProtectedRoute';
 
 const App = () => {
@@ -17,9 +15,7 @@ const App = () => {
           <Routes>
             <Route path="/Principal" element={<Principal />} />
             <Route path="/Login" element={<Login />} />
-            <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
-            <Route path="/admin" element={<ProtectedRoute element={<AdminDashboard />} />} />
-            <Route path="/user" element={<ProtectedRoute element={<UserDashboard />} />} />
+            <Route path="/Dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
             <Route path="/" element={<AuthRedirect />} />
           </Routes>
         </Router>
@@ -31,7 +27,7 @@ const App = () => {
 const AuthRedirect = () => {
   const { role } = React.useContext(AuthContext);
   console.log(`AuthRedirect: role is ${role}`);
-  return role ? <Navigate to={role === 'admin' ? '/admin' : '/user'} /> : <Navigate to="/login" />;
+  return role ? <Navigate to={role === 'Administrador' ? '/Dashboard' : '/Login'} /> : <Navigate to="/Login" />;
 };
 
 export default App;

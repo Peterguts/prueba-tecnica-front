@@ -56,10 +56,6 @@ const FooterSocials = styled.a`
   text-decoration: none;
 `;
 
-const FooterChat = styled.div`
-  cursor: pointer;
-`;
-
 const Paragraph = styled.p`
   font-size: 16px;
   margin-bottom: 20px;

@@ -1,55 +1,55 @@
-import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from './AuthContext';
+import React, { useState, useEffect } from 'react';
+import { API_ROUTES } from './config/config';
 import styled from 'styled-components';
-import Footer from './Footer'; // Importa el componente Footer
+import axios from 'axios';
+import Footer from './Footer'; 
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh; /* Cambiado a min-height para ocupar toda la pantalla */
+  min-height: 100vh;
   background-color: #f0f2f5;
-  padding-top: 80px; /* Espacio para el header */
-  padding-bottom: 80px; /* Espacio para el footer */
-  box-sizing: border-box; /* Incluye el padding en el ancho total */
+  padding-top: 80px;
+  padding-bottom: 80px;
+  box-sizing: border-box;
 `;
 
 const Header = styled.header`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #0033cc; /* Color de fondo del header */
+  background-color: #0033cc;
   padding: 10px 20px;
-  width: 100%; /* Ocupa todo el ancho */
-  position: fixed; /* Fijo en la parte superior */
-  top: 0; /* Parte superior */
-  z-index: 1000; /* Para que se superponga sobre otros elementos */
-  box-sizing: border-box; /* Incluye el padding en el ancho total */
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  box-sizing: border-box;
 `;
 
 const HeaderContent = styled.div`
-  max-width: 1200px; /* Limita el ancho máximo del contenido */
-  width: 100%; /* Ocupa todo el ancho */
-  margin: 0 auto; /* Centra el contenido horizontalmente */
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
 const Logo = styled.img`
-  height: 40px; /* Ajusta la altura del logo según sea necesario */
+  height: 40px;
 `;
 
 const Nav = styled.nav`
   display: flex;
   align-items: center;
-  gap: 20px; /* Espacio entre los elementos del menú */
+  gap: 20px;
 `;
 
 const NavLink = styled.a`
-  color: white;  
+  color: white;
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -85,7 +85,7 @@ const SearchInput = styled.input`
   outline: none;
   padding: 0.5rem;
   border-radius: 4px;
-  width: 200px; /* Ajusta el ancho del buscador */
+  width: 200px;
 `;
 
 const SearchIcon = styled.span`
@@ -93,34 +93,6 @@ const SearchIcon = styled.span`
   margin-left: 0.5rem;
 `;
 
-const LoginContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px; /* Espacio entre los elementos del login */
-`;
-
-const Select = styled.select`
-  padding: 0.5rem;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-`;
-
-const Button = styled.button`
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 4px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
-
-const ErrorMessage = styled.p`
-  color: red;
-  margin: 0;
-`;
 
 const ProductsContainer = styled.div`
   display: flex;
@@ -154,41 +126,26 @@ const ProductPrice = styled.p`
   font-weight: bold;
 `;
 
-const products = [
-  {
-    id: 1,
-    title: 'Producto 1',
-    price: '$10.00',
-    image: '/img/product1.jpg',
-  },
-  {
-    id: 2,
-    title: 'Producto 2',
-    price: '$20.00',
-    image: '/img/product2.jpg',
-  },
-  {
-    id: 3,
-    title: 'Producto 3',
-    price: '$30.00',
-    image: '/img/product3.jpg',
-  },
-];
+const ProductDescription = styled.p`
+  color: #747a80;
+  font-weight: bold;
+`;
 
-const Login = () => {
-  const { login } = useContext(AuthContext);
-  const [role, setRole] = useState('');
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
+const Principal = () => {
+  const [products, setProducts] = useState([]);
 
-  const handleLogin = () => {
-    if (role) {
-      login(role);
-      navigate(role === 'admin' ? '/admin' : '/user');
-    } else {
-      setError('Por favor, selecciona un rol.');
-    }
-  };
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(API_ROUTES.PRODUCTS_DIS);
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Error al obtener productos:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
     <>
@@ -200,15 +157,7 @@ const Login = () => {
               <SearchInput type="text" placeholder="Buscar..." />
               <SearchIcon>🔍</SearchIcon>
             </SearchContainer>
-            <NavLink href="#">
-              <Icon version="1.0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512.000000 533.000000" preserveAspectRatio="xMidYMid meet">
-                <g transform="translate(0.000000,533.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
-                  <path d="M2415 4889 c-418 -53 -789 -360 -918 -764 -42 -130 -51 -192 -52 -345 0 -169 17 -267 72 -405 242 -614 951 -890 1539 -599 556 276 782 950 504 1504 -214 424 -671 668 -1145 609z m280 -324 c162 -28 292 -94 412 -208 212 -202 299 -498 228 -778 -69 -271 -297 -499 -575 -576 -91 -25 -310 -24 -400 1 -229 63 -419 221 -519 429 -202 419 -5 916 431 1090 132 53 276 67 423 42z"/>
-                  <path d="M2390 2333 c-453 -43 -722 -133 -1175 -393 -274 -157 -404 -248 -526 -370 -87 -86 -113 -119 -147 -187 -49 -99 -66 -176 -59 -264 14 -167 98 -297 302 -467 244 -204 476 -308 740 -332 145 -13 1925 -13 2070 0 152 14 278 50 420 120 277 137 533 375 596 554 94 270 -46 523 -436 783 -110 74 -416 250 -545 314 -267 132 -548 210 -865 239 -103 9 -295 11 -375 3z m371 -323 c231 -24 489 -93 683 -184 116 -54 473 -259 591 -340 50 -33 124 -95 166 -136 156 -155 156 -239 -1 -390 -157 -152 -337 -259 -507 -303 l-88 -22 -1045 0 c-1044 0 -1045 0 -1131 22 -171 44 -353 152 -509 303 -81 78 -119 140 -120 194 0 80 119 219 285 332 132 90 528 315 631 358 338 143 701 200 1045 166z"/>
-                </g>
-              </Icon>
-              Iniciar sesión
-            </NavLink>
+            <NavLink href="#"></NavLink>
             <NavLink href="#">
               <Icon version="1.0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
                 <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
@@ -219,15 +168,6 @@ const Login = () => {
                 </g>
               </Icon>
             </NavLink>
-            <LoginContainer>
-              <Select onChange={(e) => setRole(e.target.value)} value={role}>
-                <option value="">Seleccionar Rol</option>
-                <option value="admin">Admin</option>
-                <option value="colaborador">Colaborador</option>
-              </Select>
-              <Button onClick={handleLogin}>Login</Button>
-              {error && <ErrorMessage>{error}</ErrorMessage>}
-            </LoginContainer>
           </Nav>
         </HeaderContent>
         <HeaderContent>
@@ -246,13 +186,14 @@ const Login = () => {
       </Header>
       <Container>
         <ProductsContainer>
-          {products.map((product) => (
-            <ProductCard key={product.id}>
-              <ProductImage src={product.image} alt={product.title} />
-              <ProductTitle>{product.title}</ProductTitle>
-              <ProductPrice>{product.price}</ProductPrice>
-            </ProductCard>
-          ))}
+        {products.map(product => (
+          <ProductCard key={product.productoID}>
+            <ProductImage src={product.imagenURL} alt={product.nombre} />
+            <ProductTitle>{product.nombre}</ProductTitle>
+            <ProductDescription>{product.descripcion}</ProductDescription>
+            <ProductPrice>Q{product.precio}</ProductPrice>
+          </ProductCard>
+        ))}
         </ProductsContainer>
       </Container>
       <Footer />
@@ -260,4 +201,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Principal;
